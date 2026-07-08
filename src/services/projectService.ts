@@ -86,3 +86,11 @@ export async function getActiveProjects(userId: number): Promise<Project[]> {
     where: and(eq(projects.userId, userId), eq(projects.status, 'active')),
   }) as Promise<Project[]>
 }
+
+export async function getProjectsByName(userId: number): Promise<string[]> {
+  const db = getDatabase()
+  const results = await db.query.projects.findMany({
+    where: eq(projects.userId, userId),
+  })
+  return (results as Project[]).map((p) => p.name)
+}
