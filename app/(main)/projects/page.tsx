@@ -5,13 +5,29 @@ import type { Project, ApiResponse, CreateProjectInput } from '@/types'
 
 export default function ProjectsPage() {
   const [projects, setProjects] = useState<Project[]>([])
+  const [filteredProjects, setFilteredProjects] = useState<Project[]>([])
   const [loading, setLoading] = useState(true)
   const [showForm, setShowForm] = useState(false)
+  const [searchText, setSearchText] = useState('')
   const [formData, setFormData] = useState<CreateProjectInput>({
     name: '',
     hourlyRate: 0,
     description: '',
   })
+
+  // 검색 필터링
+  const updateFilteredProjects = (projectList: Project[], query: string) => {
+    if (!query.trim()) {
+      setFilteredProjects(projectList)
+      return
+    }
+    const filtered = projectList.filter(
+      (p) =>
+        p.name.toLowerCase().includes(query.toLowerCase()) ||
+        (p.description?.toLowerCase().includes(query.toLowerCase()) ?? false)
+    )
+    setFilteredProjects(filtered)
+  }
 
   useEffect(() => {
     fetchProjects()
@@ -23,6 +39,7 @@ export default function ProjectsPage() {
       const data = (await res.json()) as ApiResponse<Project[]>
       if (data.success && data.data) {
         setProjects(data.data)
+        updateFilteredProjects(data.data, searchText)
       }
     } catch (error) {
       console.error('프로젝트 조회 실패:', error)
@@ -43,6 +60,7 @@ export default function ProjectsPage() {
       if (data.success) {
         setFormData({ name: '', hourlyRate: 0, description: '' })
         setShowForm(false)
+        setSearchText('')
         await fetchProjects()
       }
     } catch (error) {
@@ -60,6 +78,20 @@ export default function ProjectsPage() {
         >
           {showForm ? '취소' : '+ 새 프로젝트'}
         </button>
+      </div>
+
+      <div className="mb-8 bg-white border border-gray-200 rounded-lg p-6">
+        <label className="block text-sm font-medium text-gray-900 mb-2">프로젝트 검색</label>
+        <input
+          type="text"
+          placeholder="프로젝트명이나 설명으로 검색..."
+          value={searchText}
+          onChange={(e) => {
+            setSearchText(e.target.value)
+            updateFilteredProjects(projects, e.target.value)
+          }}
+          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
       </div>
 
       {showForm && (
@@ -132,6 +164,16 @@ export default function ProjectsPage() {
             첫 프로젝트 만들기
           </button>
         </div>
+      ) : filteredProjects.length === 0 ? (
+        <div className="text-center py-12 bg-gray-50 rounded-lg border border-gray-200">
+          <p className="text-gray-600">검색 결과가 없습니다.</p>
+          <button
+            onClick={() => setSearchText('')}
+            className="text-blue-500 font-medium hover:underline mt-2"
+          >
+            검색 초기화
+          </button>
+        </div>
       ) : (
         <div className="overflow-x-auto bg-white border border-gray-200 rounded-lg">
           <table className="w-full text-sm">
@@ -145,7 +187,7 @@ export default function ProjectsPage() {
               </tr>
             </thead>
             <tbody>
-              {projects.map((project) => (
+              {filteredProjects.map((project) => (
                 <tr key={project.id} className="border-b border-gray-200 hover:bg-gray-50">
                   <td className="px-4 py-3 text-gray-900 font-medium">{project.name}</td>
                   <td className="px-4 py-3 text-gray-600">{project.description || '-'}</td>
