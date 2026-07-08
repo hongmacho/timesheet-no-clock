@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>타임시트: 클릭 없는 시간 기록 — 다음 단계 가이드</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    [data-theme="dark"] {
+      color-scheme: dark;
+    }
+    [data-theme="light"] {
+      color-scheme: light;
+    }
+  </style>
+</head>
+<body class="bg-white text-gray-900 transition-colors" data-theme="light">
+  <!-- 헤더 -->
+  <header class="bg-white border-b border-gray-200 sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 py-4">
+      <div class="flex items-center justify-between">
+        <div>
+          <h1 class="text-3xl font-bold">⏱️ 타임시트: 클릭 없는 시간 기록</h1>
+          <p class="text-gray-600 text-sm mt-1">프리랜서를 위한 다음 단계 개선 가이드</p>
+        </div>
+        <div class="flex items-center gap-4">
+          <a href="https://github.com/hongmacho/timesheet-no-clock" target="_blank"
+             class="px-4 py-2 bg-gray-900 text-white rounded-lg hover:bg-gray-800 text-sm font-medium">
+            GitHub 저장소
+          </a>
+          <button id="themeToggle" class="px-4 py-2 bg-gray-200 text-gray-900 rounded-lg hover:bg-gray-300">
+            🌙 다크 모드
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-4 py-12">
+    <!-- 소개 -->
+    <section class="mb-12">
+      <div class="bg-blue-50 border border-blue-200 rounded-lg p-8">
+        <h2 class="text-2xl font-bold text-blue-900 mb-4">🎯 현재 상태</h2>
+        <p class="text-blue-900 mb-4">
+          <strong>v0.1.0</strong> — MVP 완성! 자연어 시간 입력, 프로젝트 관리, 통계 대시보드를 지원합니다.
+        </p>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div class="bg-white rounded p-4">
+            <p class="text-sm text-blue-600 font-medium">화면</p>
+            <p class="text-2xl font-bold">7개</p>
+          </div>
+          <div class="bg-white rounded p-4">
+            <p class="text-sm text-blue-600 font-medium">API 라우트</p>
+            <p class="text-2xl font-bold">6개</p>
+          </div>
+          <div class="bg-white rounded p-4">
+            <p class="text-sm text-blue-600 font-medium">개발 시간</p>
+            <p class="text-2xl font-bold">38시간</p>
+          </div>
+          <div class="bg-white rounded p-4">
+            <p class="text-sm text-blue-600 font-medium">QA 통과</p>
+            <p class="text-2xl font-bold">✅</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 빠른 승리 -->
+    <section class="mb-12">
+      <h2 class="text-2xl font-bold mb-6">⚡ 빠른 승리 (1-2시간, 즉시 효과)</h2>
+      <div class="space-y-4">
+        <div class="bg-white border border-gray-200 rounded-lg p-6">
+          <div class="flex items-start gap-4">
+            <input type="checkbox" class="mt-1 w-5 h-5 text-blue-600 rounded cursor-pointer">
+            <div class="flex-1">
+              <h3 class="font-bold text-lg">빠른 시간 기록 버튼</h3>
+              <p class="text-gray-600 text-sm mt-1">홈 화면에 '빠른 기록' 버튼 추가 (마지막 사용 프로젝트 기본값). 클릭 → 프로젝트 선택만 → 저장.</p>
+              <p class="text-blue-600 text-sm mt-2">⏱️ 2시간 • 📊 일일 기록 20% 증가 예상</p>
+            </div>
+          </div>
+        </div>
+        <div class="bg-white border border-gray-200 rounded-lg p-6">
+          <div class="flex items-start gap-4">
+            <input type="checkbox" class="mt-1 w-5 h-5 text-blue-600 rounded cursor-pointer">
+            <div class="flex-1">
+              <h3 class="font-bold text-lg">실행 취소 (Undo)</h3>
+              <p class="text-gray-600 text-sm mt-1">삭제한 기록을 3초 내에 복구 가능. 현재 soft-delete 구조 → UI만 추가.</p>
+              <p class="text-blue-600 text-sm mt-2">⏱️ 1.5시간 • 🔄 실수 방지</p>
+            </div>
+          </div>
+        </div>
+        <div class="bg-white border border-gray-200 rounded-lg p-6">
+          <div class="flex items-start gap-4">
+            <input type="checkbox" class="mt-1 w-5 h-5 text-blue-600 rounded cursor-pointer">
+            <div class="flex-1">
+              <h3 class="font-bold text-lg">주간 시간 자동 계산</h3>
+              <p class="text-gray-600 text-sm mt-1">/analytics에서 '이번 주 총 시간' 표시. getTotalHoursForWeek() 이미 구현됨.</p>
+              <p class="text-blue-600 text-sm mt-2">⏱️ 1시간 • 📈 통계 대시보드 완성도 향상</p>
+            </div>
+          </div>
+        </div>
+        <div class="bg-white border border-gray-200 rounded-lg p-6">
+          <div class="flex items-start gap-4">
+            <input type="checkbox" class="mt-1 w-5 h-5 text-blue-600 rounded cursor-pointer">
+            <div class="flex-1">
+              <h3 class="font-bold text-lg">CSV 내보내기</h3>
+              <p class="text-gray-600 text-sm mt-1">/logs에서 '다운로드' 버튼 → 날짜, 프로젝트, 시간, 메모 포함. 기초 구조 준비됨.</p>
+              <p class="text-blue-600 text-sm mt-2">⏱️ 2시간 • 📥 데이터 이식성 제공</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 핵심 기능 개선 -->
+    <section class="mb-12">
+      <h2 class="text-2xl font-bold mb-6">🚀 핵심 기능 개선 (1-2주)</h2>
+      <div class="space-y-4">
+        <div class="bg-white border border-gray-200 rounded-lg p-6">
+          <div class="flex items-start gap-4">
+            <input type="checkbox" class="mt-1 w-5 h-5 text-green-600 rounded cursor-pointer">
+            <div class="flex-1">
+              <h3 class="font-bold text-lg">청구서 생성 & PDF 다운로드</h3>
+              <p class="text-gray-600 text-sm mt-1">프로젝트별 청구서 자동 생성 + PDF 다운로드. API 스켈레톤 준비됨. 도구: pdfkit 또는 html2pdf.</p>
+              <p class="text-green-600 text-sm mt-2">⏱️ 5시간 • 💰 핵심 가치: 청구서 자동화</p>
+            </div>
+          </div>
+        </div>
+        <div class="bg-white border border-gray-200 rounded-lg p-6">
+          <div class="flex items-start gap-4">
+            <input type="checkbox" class="mt-1 w-5 h-5 text-green-600 rounded cursor-pointer">
+            <div class="flex-1">
+              <h3 class="font-bold text-lg">검색 고도화 (태그, 상태 필터)</h3>
+              <p class="text-gray-600 text-sm mt-1">프로젝트 태그별 필터링 (#web, #consulting). 현재 텍스트 검색만 지원 → 필터 UI 추가.</p>
+              <p class="text-green-600 text-sm mt-2">⏱️ 3시간 • 🔍 복잡한 프로젝트 관리 용이</p>
+            </div>
+          </div>
+        </div>
+        <div class="bg-white border border-gray-200 rounded-lg p-6">
+          <div class="flex items-start gap-4">
+            <input type="checkbox" class="mt-1 w-5 h-5 text-green-600 rounded cursor-pointer">
+            <div class="flex-1">
+              <h3 class="font-bold text-lg">자동 타이머 기능</h3>
+              <p class="text-gray-600 text-sm mt-1">'시작' 버튼 → 자동 시간 측정. 정지 시 기록 저장. 구현: React useTimer 훅 + 실시간 업데이트.</p>
+              <p class="text-green-600 text-sm mt-2">⏱️ 8시간 • ⏲️ 병렬 작업 시 편의성 향상</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 기술 개선 -->
+    <section class="mb-12">
+      <h2 class="text-2xl font-bold mb-6">🔧 기술 개선 (중기)</h2>
+      <div class="bg-gray-50 border border-gray-200 rounded-lg p-6">
+        <ul class="space-y-3">
+          <li class="flex items-start gap-3">
+            <span class="text-blue-600 font-bold">✓</span>
+            <span><strong>테스트 커버리지 (80%):</strong> Jest + Playwright E2E 테스트. 현재 파서만 50개 케이스.</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="text-blue-600 font-bold">✓</span>
+            <span><strong>클라우드 동기화:</strong> Supabase (PostgreSQL) 연동. Drizzle ORM 덕분에 DB 마이그레이션 최소화 가능.</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="text-blue-600 font-bold">✓</span>
+            <span><strong>성능 최적화:</strong> Lighthouse 90+ 목표. React Query 캐싱, 번들 크기 최적화.</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 수익화 -->
+    <section class="mb-12">
+      <h2 class="text-2xl font-bold mb-6">💰 수익화 전략</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="bg-white border border-gray-200 rounded-lg p-6">
+          <h3 class="font-bold text-lg mb-3">Freemium 모델</h3>
+          <ul class="space-y-2 text-sm text-gray-600">
+            <li>• <strong>Free:</strong> 시간 기록, 기본 통계</li>
+            <li>• <strong>Pro ($5/월):</strong> 청구서 PDF, CSV 내보내기</li>
+            <li>• <strong>Team ($20/월):</strong> 팀원 관리</li>
+          </ul>
+          <p class="text-blue-600 font-bold mt-4">예상 수익: 월 $10k-50k</p>
+        </div>
+        <div class="bg-white border border-gray-200 rounded-lg p-6">
+          <h3 class="font-bold text-lg mb-3">B2B 통합</h3>
+          <ul class="space-y-2 text-sm text-gray-600">
+            <li>• Wave Accounting 통합</li>
+            <li>• QuickBooks API 연동</li>
+            <li>• 화이트라벨 (회계 사무소)</li>
+          </ul>
+          <p class="text-blue-600 font-bold mt-4">예상 수익: 월 $5k-20k</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 다음 단계 -->
+    <section class="mb-12">
+      <h2 class="text-2xl font-bold mb-6">📋 추천 로드맵 (6개월)</h2>
+      <div class="space-y-3">
+        <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+          <p class="font-bold text-yellow-900">주차 1-2: 빠른 승리 구현</p>
+          <p class="text-sm text-yellow-800">빠른 기록, Undo, 주간 계산, CSV 내보내기 → 사용자 만족도 ↑</p>
+        </div>
+        <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+          <p class="font-bold text-yellow-900">주차 3-4: 청구서 기능 완성</p>
+          <p class="text-sm text-yellow-800">PDF 생성 → MVP의 핵심 가치 완성</p>
+        </div>
+        <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+          <p class="font-bold text-yellow-900">주차 5-6: 초기 사용자 확보</p>
+          <p class="text-sm text-yellow-800">ProductHunt 출시, Reddit 커뮤니티 홍보 → 500명 사용자</p>
+        </div>
+        <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+          <p class="font-bold text-yellow-900">주차 7-8: 유료화 준비</p>
+          <p class="text-sm text-yellow-800">인증 레이어 + Freemium 모델 구현</p>
+        </div>
+        <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+          <p class="font-bold text-yellow-900">주차 9+: 팀 기능 & 확장</p>
+          <p class="text-sm text-yellow-800">팀 협업 기능 추가 → B2B 수익화 본격화</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 피드백 -->
+    <section class="bg-blue-50 border border-blue-200 rounded-lg p-8">
+      <h2 class="text-2xl font-bold text-blue-900 mb-4">💬 피드백 및 제안</h2>
+      <p class="text-blue-900 mb-4">
+        이 가이드는 초기 사용자 피드백과 개발 과정에서 도출된 기능 제안입니다.
+      </p>
+      <div class="space-y-2 text-sm text-blue-800">
+        <p>❓ 질문: 가장 필요한 기능은?</p>
+        <p>💡 아이디어: 새로운 사용 사례가 있으신가요?</p>
+        <p>🐛 버그: 발견한 문제는 <a href="https://github.com/hongmacho/timesheet-no-clock/issues" class="underline font-bold">GitHub Issues</a>에 보고해주세요.</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- 푸터 -->
+  <footer class="border-t border-gray-200 mt-16 py-8 text-center text-sm text-gray-500 bg-gray-50">
+    <p>타임시트: 클릭 없는 시간 기록 • v0.1.0 • © 2025</p>
+    <p><a href="https://github.com/hongmacho/timesheet-no-clock" class="text-blue-600 hover:underline">GitHub</a> • MIT 라이선스</p>
+  </footer>
+
+  <script>
+    // 다크 모드 토글
+    const themeToggle = document.getElementById('themeToggle');
+    const html = document.documentElement;
+    const body = document.body;
+
+    // 저장된 테마 확인
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    html.setAttribute('data-theme', savedTheme);
+    if (savedTheme === 'dark') {
+      body.classList.add('dark');
+      body.classList.add('bg-gray-900');
+      body.classList.add('text-gray-100');
+      themeToggle.textContent = '☀️ 라이트 모드';
+    }
+
+    themeToggle.addEventListener('click', () => {
+      const currentTheme = html.getAttribute('data-theme');
+      const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+
+      html.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+
+      if (newTheme === 'dark') {
+        body.classList.add('dark');
+        body.classList.add('bg-gray-900');
+        body.classList.add('text-gray-100');
+        body.classList.remove('bg-white');
+        body.classList.remove('text-gray-900');
+        themeToggle.textContent = '☀️ 라이트 모드';
+      } else {
+        body.classList.remove('dark');
+        body.classList.remove('bg-gray-900');
+        body.classList.remove('text-gray-100');
+        body.classList.add('bg-white');
+        body.classList.add('text-gray-900');
+        themeToggle.textContent = '🌙 다크 모드';
+      }
+    });
+
+    // 체크박스 토글
+    document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+      checkbox.addEventListener('change', function() {
+        const card = this.closest('.bg-white, .bg-yellow-50, .bg-blue-50');
+        if (this.checked) {
+          card?.classList.add('opacity-50');
+        } else {
+          card?.classList.remove('opacity-50');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
